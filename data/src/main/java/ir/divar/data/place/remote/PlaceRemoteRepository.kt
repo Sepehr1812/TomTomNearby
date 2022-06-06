@@ -19,4 +19,12 @@ class PlaceRemoteRepository(
             }
         }
     }
+
+    suspend fun getPlacesByLink(url: String) = withContext(dispatcher) {
+        iPlaceApi.safeApiCall {
+            getPlacesByLink(url).let {
+                it.determineStatus(it.result?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
+            }
+        }
+    }
 }

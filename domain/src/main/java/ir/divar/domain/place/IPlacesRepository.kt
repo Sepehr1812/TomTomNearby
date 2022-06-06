@@ -7,4 +7,5 @@ import ir.divar.domain.remote.BaseResult
 interface IPlacesRepository {
 
     suspend fun getPlaces(latLng: LatLng): BaseResult<List<Place>, String>
+    suspend fun getPlacesByLink(url: String): BaseResult<List<Place>, String>
 }

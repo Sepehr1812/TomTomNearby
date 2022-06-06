@@ -10,4 +10,7 @@ class PlaceRepository(
 
     override suspend fun getPlaces(latLng: LatLng) =
         placeRemoteRepository.getPlaces(latLng)
+
+    override suspend fun getPlacesByLink(url: String) =
+        placeRemoteRepository.getPlacesByLink(url)
 }

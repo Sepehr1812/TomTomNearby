@@ -8,6 +8,8 @@ import dagger.hilt.components.SingletonComponent
 import ir.divar.data.place.PlaceRepository
 import ir.divar.data.place.remote.PlaceRemoteRepository
 import ir.divar.domain.place.IPlacesRepository
+import ir.divar.domain.place.usecase.GetPlaceListByLinkFromServer
+import ir.divar.domain.place.usecase.GetPlaceListFromServer
 import javax.inject.Singleton
 
 
@@ -22,4 +24,14 @@ abstract class AppModule {
     @Provides
     fun provideRepository(placeRemoteRepository: PlaceRemoteRepository) =
         PlaceRepository(placeRemoteRepository)
+
+    @Singleton
+    @Provides
+    fun provideGetPlaceListFromServer(iPlacesRepository: IPlacesRepository) =
+        GetPlaceListFromServer(iPlacesRepository)
+
+    @Singleton
+    @Provides
+    fun provideGetPlaceListByLinkFromServer(iPlacesRepository: IPlacesRepository) =
+        GetPlaceListByLinkFromServer(iPlacesRepository)
 }
