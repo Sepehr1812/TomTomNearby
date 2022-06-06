@@ -6,8 +6,9 @@ import ir.divar.domain.place.model.LatLng
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class PlaceRemoteRepository(
+class PlaceRemoteRepository @Inject constructor(
     private val iPlaceApi: IPlaceApi,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {

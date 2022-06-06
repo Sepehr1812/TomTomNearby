@@ -6,10 +6,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ir.divar.data.place.PlaceRepository
+import ir.divar.data.place.local.PlaceLocalRepository
 import ir.divar.data.place.remote.PlaceRemoteRepository
 import ir.divar.domain.place.IPlacesRepository
 import ir.divar.domain.place.usecase.GetPlaceListByLinkFromServer
+import ir.divar.domain.place.usecase.GetPlaceListFromLocal
 import ir.divar.domain.place.usecase.GetPlaceListFromServer
+import ir.divar.domain.place.usecase.InsertPlaceList
 import javax.inject.Singleton
 
 
@@ -22,8 +25,10 @@ abstract class AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(placeRemoteRepository: PlaceRemoteRepository) =
-        PlaceRepository(placeRemoteRepository)
+    fun provideRepository(
+        placeRemoteRepository: PlaceRemoteRepository,
+        placeLocalRepository: PlaceLocalRepository
+    ) = PlaceRepository(placeRemoteRepository, placeLocalRepository)
 
     @Singleton
     @Provides
@@ -34,4 +39,14 @@ abstract class AppModule {
     @Provides
     fun provideGetPlaceListByLinkFromServer(iPlacesRepository: IPlacesRepository) =
         GetPlaceListByLinkFromServer(iPlacesRepository)
+
+    @Singleton
+    @Provides
+    fun provideGetPlaceListFromLocal(iPlacesRepository: IPlacesRepository) =
+        GetPlaceListFromLocal(iPlacesRepository)
+
+    @Singleton
+    @Provides
+    fun provideInsertPlaceList(iPlacesRepository: IPlacesRepository) =
+        InsertPlaceList(iPlacesRepository)
 }

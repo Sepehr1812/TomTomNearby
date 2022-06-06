@@ -14,5 +14,5 @@ class GetPlaceListFromServer @Inject constructor(
     data class RequestValues(val latLng: LatLng) : RequestValue
 
     override suspend fun executeUseCase(requestValues: RequestValues) =
-        iPlacesRepository.getPlaces(requestValues.latLng)
+        iPlacesRepository.getPlacesFromServer(requestValues.latLng)
 }

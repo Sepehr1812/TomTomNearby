@@ -11,10 +11,10 @@ class PlaceRepository(
     private val placeLocalRepository: PlaceLocalRepository
 ) : IPlacesRepository {
 
-    override suspend fun getPlaces(latLng: LatLng) =
+    override suspend fun getPlacesFromServer(latLng: LatLng) =
         placeRemoteRepository.getPlaces(latLng)
 
-    override suspend fun getPlacesByLink(url: String) =
+    override suspend fun getPlacesByLinkFromServer(url: String) =
         placeRemoteRepository.getPlacesByLink(url)
 
     override suspend fun getPlaceListFromLocal() =

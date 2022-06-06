@@ -13,5 +13,5 @@ class GetPlaceListByLinkFromServer @Inject constructor(
     data class RequestValues(val url: String) : RequestValue
 
     override suspend fun executeUseCase(requestValues: RequestValues) =
-        iPlacesRepository.getPlacesByLink(requestValues.url)
+        iPlacesRepository.getPlacesByLinkFromServer(requestValues.url)
 }
