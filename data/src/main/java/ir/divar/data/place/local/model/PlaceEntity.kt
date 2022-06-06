@@ -7,7 +7,7 @@ import ir.divar.domain.place.model.PlaceGeocodes
 import ir.divar.domain.place.model.PlaceLocation
 
 
-@Entity
+@Entity(tableName = "Places")
 data class PlaceEntity(
     @PrimaryKey
     val id: String,

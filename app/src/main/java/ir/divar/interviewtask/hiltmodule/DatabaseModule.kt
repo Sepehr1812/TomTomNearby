@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.divar.data.db.ApplicationDatabase
+import ir.divar.data.place.local.IPlaceDao
+import ir.divar.data.place.local.PlaceLocalRepository
 import ir.divar.interviewtask.util.Constants.DATABASE_NAME
 import javax.inject.Singleton
 
@@ -25,4 +27,13 @@ object DatabaseModule {
                 DATABASE_NAME
             ).build()
         }
+
+    @Singleton
+    @Provides
+    fun provideChannelDao(appDatabase: ApplicationDatabase) = appDatabase.placeDao()
+
+
+    @Singleton
+    @Provides
+    fun provideRepository(dao: IPlaceDao) = PlaceLocalRepository(dao)
 }

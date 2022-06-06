@@ -8,4 +8,7 @@ interface IPlacesRepository {
 
     suspend fun getPlaces(latLng: LatLng): BaseResult<List<Place>, String>
     suspend fun getPlacesByLink(url: String): BaseResult<List<Place>, String>
+
+    suspend fun getPlaceListFromLocal(): List<Place>?
+    suspend fun insertPlaceList(placeList: List<Place>): Unit?
 }
