@@ -16,7 +16,9 @@ data class ApiResponse<T : Any>(
     /**
      * Checks state of the API response and determines its type.
      */
-    fun determineStatus() = if (result != null)
-        BaseResult.Success(result)
+    fun <V : Any> determineStatus(
+        onSuccessData: V?
+    ) = if (result != null)
+        BaseResult.Success(onSuccessData)
     else BaseResult.Error(message)
 }

@@ -1,5 +1,6 @@
 package ir.divar.data.place.remote
 
+import ir.divar.data.place.remote.model.PlaceRemoteMapper
 import ir.divar.data.remote.safeApiCall
 import ir.divar.domain.place.model.LatLng
 import kotlinx.coroutines.CoroutineDispatcher
@@ -13,7 +14,9 @@ class PlaceRemoteRepository(
 
     suspend fun getPlaces(latLng: LatLng) = withContext(dispatcher) {
         iPlaceApi.safeApiCall {
-            getPlaces("${latLng.latitude},${latLng.longitude}").determineStatus()
+            getPlaces("${latLng.latitude},${latLng.longitude}").let {
+                it.determineStatus(it.result?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
+            }
         }
     }
 }

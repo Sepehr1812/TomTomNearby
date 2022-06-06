@@ -21,5 +21,5 @@ interface IPlaceApi : GeneralApi {
         @Query("client_id") clientId: String = BuildConfig.FSQ_CLIENT_ID,
         @Query("client_secret") clientSecret: String = BuildConfig.FSQ_CLIENT_SECRET,
         @Query("v") version: String = "20220601" // the date determines the version of the API
-    ): ApiResponse<PlaceRemoteModel>
+    ): ApiResponse<List<PlaceRemoteModel>>
 }
