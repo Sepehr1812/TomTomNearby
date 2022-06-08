@@ -5,10 +5,10 @@ import ir.divar.domain.place.model.Place
 object PlaceLocalMapper {
 
     fun mapToDomain(placeEntity: PlaceEntity) = placeEntity.run {
-        Place(id, name, categories, distance, geocodes, location)
+        Place(id, name, categories, distance, geocode, location)
     }
 
     fun mapFromDomain(place: Place) = place.run {
-        PlaceEntity(id, name, categories, distance, geocodes, location)
+        PlaceEntity(id, name, categories, distance, geocode, location)
     }
 }

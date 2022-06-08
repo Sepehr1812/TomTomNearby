@@ -1,7 +1,7 @@
 package ir.divar.interviewtask.util
 
 import com.google.android.gms.maps.model.LatLng
-import ir.divar.domain.place.model.LatLng as PlaceModelLatLng
+import ir.divar.domain.place.model.PlaceGeocode as PlaceModelLatLng
 
 fun LatLng.toLocalString() = "${latitude},${longitude}"
 

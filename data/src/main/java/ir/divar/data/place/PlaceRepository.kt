@@ -12,8 +12,8 @@ class PlaceRepository @Inject constructor(
     private val placeLocalRepository: PlaceLocalRepository
 ) : IPlacesRepository {
 
-    override suspend fun getPlacesFromServer(latLng: LatLng) =
-        placeRemoteRepository.getPlaces(latLng)
+    override suspend fun getPlacesFromServer(placeGeocode: PlaceGeocode) =
+        placeRemoteRepository.getPlaces(placeGeocode)
 
     override suspend fun getPlacesByLinkFromServer(url: String) =
         placeRemoteRepository.getPlacesByLink(url)

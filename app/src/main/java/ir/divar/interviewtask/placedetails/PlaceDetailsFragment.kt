@@ -75,7 +75,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                 )
                 tvPlaceAddress.text = location.formattedAddress
 
-                addPlaceMarker(geocodes.main.toGmsLatLng())
+                addPlaceMarker(geocode.toGmsLatLng())
 
                 imgPlaceBack.setOnClickListener(this@PlaceDetailsFragment)
             }
@@ -109,7 +109,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
             moveCamera(
                 CameraUpdateFactory.newLatLngBounds(
                     LatLngBounds.Builder().apply {
-                        include(args.place.geocodes.main.toGmsLatLng())
+                        include(args.place.geocode.toGmsLatLng())
                         include(args.currentLocation)
                     }.build(),
                     12

@@ -6,7 +6,7 @@ import ir.divar.domain.place.model.PlaceCategory
 object PlaceRemoteMapper {
 
     fun mapToDomain(placeRemoteModel: PlaceRemoteModel) = placeRemoteModel.run {
-        Place(id, name, convertCategoryListToString(categories), distance, geocodes, location)
+        Place(id, name, convertCategoryListToString(categories), distance, geocodes.main, location)
     }
 
     private fun convertCategoryListToString(categories: List<PlaceCategory>): String {

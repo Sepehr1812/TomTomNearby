@@ -78,6 +78,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
 
         if (!isLocationGranted()) requestLocationAccess()
+        else requestLocation()
 
         locationRequest = LocationRequest.create().apply {
             interval = 10000L
@@ -232,6 +233,11 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                  */
                 placesListViewModel.getLocalPlaceList()
             }
+        } ?:
+        /* it is the first time user uses the app, so we get places data from server */
+        currentLocation?.let { loc ->
+            userLocationSharedPreferences.saveLocation(loc)
+            placesListViewModel.getServerPlaceList(loc)
         }
     }
 
