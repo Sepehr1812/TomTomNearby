@@ -31,6 +31,11 @@
             android:name="place"
             app:argType="ir.divar.domain.place.model.Place"
             app:nullable="false" />
+
+        <argument
+            android:name="currentLocation"
+            app:argType="com.google.android.gms.maps.model.LatLng"
+            app:nullable="false" />
     </fragment>
 
 </navigation>
