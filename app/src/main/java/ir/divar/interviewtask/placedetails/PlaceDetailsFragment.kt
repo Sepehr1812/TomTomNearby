@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import ir.divar.interviewtask.R
 import ir.divar.interviewtask.databinding.FragmentPlaceDetailsBinding
+import ir.divar.interviewtask.util.toGmsLatLng
 
 
 /**
@@ -74,7 +75,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                 )
                 tvPlaceAddress.text = location.formattedAddress
 
-                addPlaceMarker(geocodes.main.let { LatLng(it.latitude, it.longitude) })
+                addPlaceMarker(geocodes.main.toGmsLatLng())
 
                 imgPlaceBack.setOnClickListener(this@PlaceDetailsFragment)
             }
@@ -108,7 +109,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
             moveCamera(
                 CameraUpdateFactory.newLatLngBounds(
                     LatLngBounds.Builder().apply {
-                        include(args.place.geocodes.main.let { LatLng(it.latitude, it.longitude) })
+                        include(args.place.geocodes.main.toGmsLatLng())
                         include(args.currentLocation)
                     }.build(),
                     12

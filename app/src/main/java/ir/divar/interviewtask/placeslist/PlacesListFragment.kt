@@ -19,10 +19,12 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.SphericalUtil
 import dagger.hilt.android.AndroidEntryPoint
 import ir.divar.domain.place.model.Place
 import ir.divar.interviewtask.R
 import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
+import ir.divar.interviewtask.util.UserLocationSharedPreferences
 
 
 /**
@@ -38,6 +40,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     private var _binding: FragmentPlacesListBinding? = null
     private val binding get() = _binding!!
 
+    private val userLocationSharedPreferences
+            by lazy { UserLocationSharedPreferences.initialWith(requireContext()) }
     private var currentLocation: LatLng? = null
     private lateinit var locationRequest: LocationRequest
     private val locationCallback = object : LocationCallback() {
@@ -45,6 +49,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             super.onLocationResult(locationResult)
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
             Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_LONG).show()
+
+            checkIfApiCallIsRequired()
         }
     }
 
@@ -106,6 +112,24 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     requireContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
+
+    /**
+     * Checks the distance between current location of the user and the last location of the API call
+     *  to decide if new API call is required or not.
+     */
+    private fun checkIfApiCallIsRequired() {
+        userLocationSharedPreferences.getLastLocation()?.also {
+            val distance = SphericalUtil.computeDistanceBetween(
+                currentLocation,
+                userLocationSharedPreferences.getLastLocation()
+            )
+
+            // TODO: handle showing places from API call or database
+            if (distance > 100) {
+                currentLocation?.let(userLocationSharedPreferences::saveLocation)
+            }
+        }
+    }
 
     override fun onItemClickListener(place: Place) {
         currentLocation?.also {
