@@ -1,14 +1,27 @@
 package ir.divar.interviewtask.placeslist
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import ir.divar.domain.place.model.Place
+import ir.divar.interviewtask.R
 import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
 
 
@@ -25,7 +38,37 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     private var _binding: FragmentPlacesListBinding? = null
     private val binding get() = _binding!!
 
+    private var currentLocation: LatLng? = null
+    private lateinit var locationRequest: LocationRequest
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            super.onLocationResult(locationResult)
+            currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
+            Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        // TODO: handle if fine location permission is not granted
+        if (it.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false))
+            requestLocation()
+    }
+
     // END of region of properties
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (!isLocationGranted()) requestLocationAccess()
+
+        locationRequest = LocationRequest.create().apply {
+            interval = 5000L
+            fastestInterval = 5000L
+            priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,10 +79,43 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         return binding.root
     }
 
-    override fun onItemClickListener(place: Place) {
-        findNavController().navigate(
-            PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(place)
+    private fun requestLocationAccess() {
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            )
         )
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestLocation() {
+        if (isLocationGranted()) {
+            // getting user location
+            LocationServices.getFusedLocationProviderClient(requireContext())
+                .requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        }
+    }
+
+    private fun isLocationGranted() =
+        ActivityCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+
+    override fun onItemClickListener(place: Place) {
+        currentLocation?.also {
+            findNavController().navigate(
+                PlacesListFragmentDirections
+                    .actionPlacesListFragmentToPlaceDetailsFragment(place, it)
+            )
+        } ?: apply {
+            Toast.makeText(requireContext(), R.string.no_location, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

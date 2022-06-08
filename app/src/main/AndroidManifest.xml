@@ -4,6 +4,8 @@
     package="ir.divar.interviewtask">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".DITApplication"
@@ -16,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DivarInterviewTask"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAP_KEY}" />
 
         <activity
             android:name=".activity.MainActivity"

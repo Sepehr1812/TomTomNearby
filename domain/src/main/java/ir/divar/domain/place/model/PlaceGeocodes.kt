@@ -1,5 +1,12 @@
 package ir.divar.domain.place.model
 
-data class PlaceGeocodes(val main: LatLng)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class LatLng(val latitude: Double, val longitude: Double)
+
+@Parcelize
+data class PlaceGeocodes(val main: LatLng) : Parcelable
+
+
+@Parcelize
+data class LatLng(val latitude: Double, val longitude: Double) : Parcelable
