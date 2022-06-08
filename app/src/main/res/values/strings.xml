@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DivarInterviewTask</string>
+    <string name="no_places">There is no place nearby.</string>
 </resources>

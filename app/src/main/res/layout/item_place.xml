@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/dimen_16"
+    android:layout_marginVertical="@dimen/dimen_8"
+    android:background="@drawable/background_white_radius_24"
+    android:elevation="@dimen/dimen_10"
+    android:orientation="vertical"
+    android:outlineAmbientShadowColor="@color/shadow_gray"
+    android:outlineSpotShadowColor="@color/shadow_gray"
+    android:padding="@dimen/dimen_10"
+    tools:targetApi="p">
+
+    <TextView
+        android:id="@+id/tvWorkoutTitle"
+        style="@style/TextStyleBold22PriLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="McDonald" />
+
+    <TextView
+        android:id="@+id/tvWorkoutTimeLevel"
+        style="@style/TextStyleReg18TerWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_8"
+        tools:text="Restaurant" />
+
+    <TextView
+        android:id="@+id/tvWorkoutView"
+        style="@style/TextStyleReg14SecWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_8"
+        tools:text="Manhattan | 300 m" />
+
+</LinearLayout>

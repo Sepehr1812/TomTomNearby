@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextStyleReg14SecWhite">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/secondary_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg18TerWhite">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">@color/tertiary_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleBold22PriLabel">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="android:textColor">@color/primary_black</item>
+    </style>
+
+</resources>
