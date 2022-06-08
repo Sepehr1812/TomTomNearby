@@ -11,4 +11,5 @@ interface IPlacesRepository {
 
     suspend fun getPlaceListFromLocal(): List<Place>?
     suspend fun insertPlaceList(placeList: List<Place>): Unit?
+    suspend fun clearPlaceList(): Unit?
 }

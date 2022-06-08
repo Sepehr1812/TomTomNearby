@@ -18,4 +18,8 @@ class PlaceLocalRepository @Inject constructor(
     suspend fun insertPlaceList(placeList: List<Place>) = iPlaceDao.executeQuery({
         insertPlaceList(placeList.map { PlaceLocalMapper.mapFromDomain(it) })
     }, onError = { Log.e(Constants.PLACE_TAG, "error inserting places") })
+
+    suspend fun clearPlaceList() = iPlaceDao.executeQuery({
+        clearPlaceTable()
+    }, onError = { Log.e(Constants.PLACE_TAG, "error clearing places") })
 }

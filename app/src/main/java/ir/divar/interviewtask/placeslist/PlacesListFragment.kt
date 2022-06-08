@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -45,15 +46,21 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     private val userLocationSharedPreferences
             by lazy { UserLocationSharedPreferences.initialWith(requireContext()) }
+
+    private lateinit var placeAdapter: PlaceAdapter
+    private val placeList = mutableListOf<Place>()
+
     private var currentLocation: LatLng? = null
     private lateinit var locationRequest: LocationRequest
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
-            Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_SHORT).show()
 
             if (isNetworkConnected()) checkIfApiCallIsRequired()
+            // obtain data from local Db when there is no Internet connection
+            else placesListViewModel.getLocalPlaceList()
         }
     }
 
@@ -73,8 +80,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         if (!isLocationGranted()) requestLocationAccess()
 
         locationRequest = LocationRequest.create().apply {
-            interval = 5000L
-            fastestInterval = 5000L
+            interval = 10000L
+            fastestInterval = 10000L
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         }
     }
@@ -86,6 +93,76 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     ): View {
         _binding = FragmentPlacesListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initialView()
+        subscribeView()
+    }
+
+    private fun initialView() {
+        binding.rvPlaceList.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            placeAdapter = PlaceAdapter(placeList, this@PlacesListFragment)
+            adapter = placeAdapter
+        }
+    }
+
+    private fun subscribeView() {
+        placesListViewModel.getLocalPlaceListResponse.observe(viewLifecycleOwner) {
+            placeList.clear()
+            placeList.addAll(it)
+            placeAdapter.notifyDataSetChanged()
+
+            displayNoPlacesTextView()
+        }
+
+        placesListViewModel.getLocalPlaceListError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.no_data, Toast.LENGTH_SHORT).show()
+
+            placeList.clear()
+            placeAdapter.notifyDataSetChanged()
+
+            displayNoPlacesTextView()
+        }
+
+        placesListViewModel.getServerPlaceListResponse.observe(viewLifecycleOwner) {
+            placeList.clear()
+            placeList.addAll(it)
+            placeAdapter.notifyDataSetChanged()
+
+            displayNoPlacesTextView()
+
+            placesListViewModel.clearPlaceList()
+        }
+
+        placesListViewModel.getServerPlaceListError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+
+            placesListViewModel.getLocalPlaceList()
+        }
+
+        placesListViewModel.insertPlaceListResponse.observe(viewLifecycleOwner) {
+
+        }
+
+        placesListViewModel.insertPlaceListError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.problem_occurred, Toast.LENGTH_SHORT).show()
+        }
+
+        placesListViewModel.clearPlaceListResponse.observe(viewLifecycleOwner) {
+            placesListViewModel.insertPlaceList(placeList)
+        }
+
+        placesListViewModel.clearPlaceListError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.problem_occurred, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun displayNoPlacesTextView() {
+        binding.tvNoPlaces.visibility = if (placeList.isNotEmpty()) View.GONE else View.VISIBLE
     }
 
     private fun requestLocationAccess() {
@@ -138,9 +215,22 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                 userLocationSharedPreferences.getLastLocation()
             )
 
-            // TODO: handle showing places from API call or database
             if (distance > 100) {
-                currentLocation?.let(userLocationSharedPreferences::saveLocation)
+                /*
+                 * distance is more than 100 meters and the Internet is connected,
+                 * so we get places data from server
+                 */
+                currentLocation?.let { loc ->
+                    userLocationSharedPreferences.saveLocation(loc)
+                    placesListViewModel.getServerPlaceList(loc)
+                }
+            } else if (placeList.isEmpty()) { // this means user has opened the app just now
+                /*
+                 * we obtain data from local Db just at the beginning of app opening.
+                 * the distance with last session location of the user is less than 100 meters
+                 * so we do not need to retrieve data from server.
+                 */
+                placesListViewModel.getLocalPlaceList()
             }
         }
     }

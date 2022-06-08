@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.divar.domain.place.model.Place
+import ir.divar.domain.place.usecase.ClearPlaceList
 import ir.divar.domain.place.usecase.GetPlaceListFromLocal
 import ir.divar.domain.place.usecase.GetPlaceListFromServer
 import ir.divar.domain.place.usecase.InsertPlaceList
@@ -14,13 +15,14 @@ import ir.divar.interviewtask.util.Constants.PROBLEM_OCCURRED_ERROR_MESSAGE
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import ir.divar.domain.place.model.LatLng as PlaceModelLatLng
+import ir.divar.domain.place.model.PlaceGeocode as PlaceModelLatLng
 
 @HiltViewModel
 class PlacesListViewModel @Inject constructor(
     private val getPlaceListFromLocal: GetPlaceListFromLocal,
     private val getPlaceListFromServer: GetPlaceListFromServer,
-    private val insertPlaceList: InsertPlaceList
+    private val insertPlaceList: InsertPlaceList,
+    private val clearPlaceList: ClearPlaceList
 ) : ViewModel() {
 
     val getLocalPlaceListResponse = MutableLiveData<List<Place>>()
@@ -31,6 +33,9 @@ class PlacesListViewModel @Inject constructor(
 
     val insertPlaceListResponse = MutableLiveData<Unit>()
     val insertPlaceListError = MutableLiveData<Unit>()
+
+    val clearPlaceListResponse = MutableLiveData<Unit>()
+    val clearPlaceListError = MutableLiveData<Unit>()
 
     /** handles exceptions may be occurred in coroutine scopes */
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, e ->
@@ -69,6 +74,14 @@ class PlacesListViewModel @Inject constructor(
             insertPlaceList.executeUseCase(InsertPlaceList.RequestValues(placeList))?.also {
                 insertPlaceListResponse.value = it
             } ?: apply { insertPlaceListError.value = Unit }
+        }
+    }
+
+    fun clearPlaceList() {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            clearPlaceList.executeUseCase(ClearPlaceList.RequestValues())?.also {
+                clearPlaceListResponse.value = Unit
+            } ?: apply { clearPlaceListError.value = Unit }
         }
     }
 }

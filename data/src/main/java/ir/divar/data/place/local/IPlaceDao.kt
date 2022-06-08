@@ -16,4 +16,7 @@ interface IPlaceDao : GeneralDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlaceList(placeList: List<PlaceEntity>)
+
+    @Query("DELETE FROM Places")
+    suspend fun clearPlaceTable()
 }

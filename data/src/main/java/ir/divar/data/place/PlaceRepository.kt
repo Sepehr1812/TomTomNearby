@@ -3,10 +3,11 @@ package ir.divar.data.place
 import ir.divar.data.place.local.PlaceLocalRepository
 import ir.divar.data.place.remote.PlaceRemoteRepository
 import ir.divar.domain.place.IPlacesRepository
-import ir.divar.domain.place.model.LatLng
 import ir.divar.domain.place.model.Place
+import ir.divar.domain.place.model.PlaceGeocode
+import javax.inject.Inject
 
-class PlaceRepository(
+class PlaceRepository @Inject constructor(
     private val placeRemoteRepository: PlaceRemoteRepository,
     private val placeLocalRepository: PlaceLocalRepository
 ) : IPlacesRepository {
@@ -22,4 +23,7 @@ class PlaceRepository(
 
     override suspend fun insertPlaceList(placeList: List<Place>) =
         placeLocalRepository.insertPlaceList(placeList)
+
+    override suspend fun clearPlaceList() =
+        placeLocalRepository.clearPlaceList()
 }

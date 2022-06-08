@@ -30,7 +30,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideChannelDao(appDatabase: ApplicationDatabase) = appDatabase.placeDao()
+    fun providePlaceDao(appDatabase: ApplicationDatabase) = appDatabase.placeDao()
 
 
     @Singleton
