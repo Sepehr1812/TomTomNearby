@@ -17,7 +17,7 @@ class PlaceRemoteRepository @Inject constructor(
     suspend fun getPlaces(placeGeocode: PlaceGeocode) = withContext(dispatcher) {
         iPlaceApi.safeApiCall {
             getPlaces("${placeGeocode.latitude},${placeGeocode.longitude}").body()?.let {
-                it.determineStatus(it.result?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
+                it.determineStatus(it.results?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
             } ?: BaseResult.Success(null)
         }
     }
@@ -25,7 +25,7 @@ class PlaceRemoteRepository @Inject constructor(
     suspend fun getPlacesByLink(url: String) = withContext(dispatcher) {
         iPlaceApi.safeApiCall {
             getPlacesByLink(url).body()?.let {
-                it.determineStatus(it.result?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
+                it.determineStatus(it.results?.map { place -> PlaceRemoteMapper.mapToDomain(place) })
             } ?: BaseResult.Success(null)
         }
     }

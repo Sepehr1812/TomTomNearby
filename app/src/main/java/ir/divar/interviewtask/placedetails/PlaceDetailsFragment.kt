@@ -65,7 +65,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
     private fun initialView() {
         with(binding) {
             with(args.place) {
-                tvPlaceDistance.text = distance.toString()
+                tvPlaceDistance.text = getString(R.string.distance_placeholder, distance)
                 tvPlaceCategory.text = categories
                 tvPlaceTitle.text = name
                 tvPlaceRegion.text = getString(
@@ -74,8 +74,6 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                     location.country
                 )
                 tvPlaceAddress.text = location.formattedAddress
-
-                addPlaceMarker(geocode.toGmsLatLng())
 
                 imgPlaceBack.setOnClickListener(this@PlaceDetailsFragment)
             }
@@ -101,6 +99,8 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        addPlaceMarker(args.place.geocode.toGmsLatLng())
+
         map.apply {
             mapType = GoogleMap.MAP_TYPE_NORMAL
             isMyLocationEnabled = true
@@ -112,7 +112,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                         include(args.place.geocode.toGmsLatLng())
                         include(args.currentLocation)
                     }.build(),
-                    12
+                    8
                 )
             )
 

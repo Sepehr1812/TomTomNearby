@@ -5,11 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcvPlaceMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_360"
+        android:layout_height="@dimen/dimen_0"
+        app:layout_constraintBottom_toBottomOf="@id/glPlace"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@color/shadow_gray" />
 
@@ -32,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20"
-        android:layout_marginBottom="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_32"
         android:background="@drawable/background_gray_radius12"
         android:drawablePadding="@dimen/dimen_8"
         android:paddingHorizontal="@dimen/dimen_8"

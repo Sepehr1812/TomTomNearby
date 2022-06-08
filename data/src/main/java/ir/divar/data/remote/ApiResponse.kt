@@ -9,7 +9,7 @@ import ir.divar.domain.remote.BaseResult
  * @author Sepi 6/6/22
  */
 data class ApiResponse<T : Any>(
-    val result: T? = null,
+    val results: T? = null,
     val message: String? = null,
 ) {
 
@@ -18,7 +18,7 @@ data class ApiResponse<T : Any>(
      */
     fun <V : Any> determineStatus(
         onSuccessData: V?
-    ) = if (result != null)
+    ) = if (results != null)
         BaseResult.Success(onSuccessData)
     else BaseResult.Error(message)
 }
