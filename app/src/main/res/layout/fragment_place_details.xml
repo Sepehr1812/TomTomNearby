@@ -1,12 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvPlaceMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Place Details" />
+        android:layout_height="@dimen/dimen_360"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/shadow_gray" />
+
+    <ImageView
+        android:id="@+id/imgPlaceBack"
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginStart="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:contentDescription="@string/back_button_desc"
+        android:padding="@dimen/dimen_12"
+        android:rotation="180"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPlaceDistance"
+        style="@style/TextStyleReg14White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_16"
+        android:background="@drawable/background_gray_radius12"
+        android:drawablePadding="@dimen/dimen_8"
+        android:paddingHorizontal="@dimen/dimen_8"
+        android:paddingVertical="@dimen/dimen_4"
+        app:drawableEndCompat="@drawable/ic_distance"
+        app:layout_constraintBottom_toBottomOf="@id/fcvPlaceMap"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="300 Meters" />
+
+    <TextView
+        android:id="@+id/tvPlaceCategory"
+        style="@style/TextStyleReg14TerWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:background="@drawable/background_gray_radius12"
+        android:backgroundTint="@color/background_gray"
+        android:padding="@dimen/dimen_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcvPlaceMap"
+        tools:text="Restaurant" />
+
+    <TextView
+        android:id="@+id/tvPlaceTitle"
+        style="@style/TextStyleBold22PriBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceCategory"
+        tools:text="McDonald" />
+
+    <TextView
+        android:id="@+id/tvPlaceRegion"
+        style="@style/TextStyleReg14TerWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        app:layout_constraintBottom_toBottomOf="@id/tvPlaceTitle"
+        app:layout_constraintStart_toEndOf="@id/tvPlaceTitle"
+        tools:text="US, NY" />
+
+    <TextView
+        android:id="@+id/tvPlaceAddress"
+        style="@style/TextStyleReg16SecBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceTitle"
+        tools:text="Street 34, Manhattan, NY, US." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

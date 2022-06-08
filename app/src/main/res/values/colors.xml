@@ -8,9 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="accent">#F94877</color>
+    <color name="gray">#99EBEBEB</color>
     <color name="shadow_gray">#B5B5B5</color>
+    <color name="background_gray">#EBF3F5</color>
+    <color name="secondary_white">#8E8E93</color>
+    <color name="tertiary_white">#6F6F75</color>
     <color name="primary_black">#131314</color>
-    <color name="secondary_white">#ACACB3</color>
-    <color name="tertiary_white">#797980</color>
+    <color name="secondary_black">#2D2D30</color>
 
 </resources>

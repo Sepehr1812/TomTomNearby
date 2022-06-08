@@ -14,18 +14,17 @@
     tools:targetApi="p">
 
     <TextView
-        android:id="@+id/tvWorkoutTitle"
-        style="@style/TextStyleBold22PriLabel"
+        android:id="@+id/tvPlaceTitle"
+        style="@style/TextStyleBold22PriBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_16"
         android:layout_marginBottom="@dimen/dimen_8"
         android:ellipsize="end"
         android:maxLines="1"
         tools:text="McDonald" />
 
     <TextView
-        android:id="@+id/tvWorkoutTimeLevel"
+        android:id="@+id/tvPlaceCategory"
         style="@style/TextStyleReg18TerWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
         tools:text="Restaurant" />
 
     <TextView
-        android:id="@+id/tvWorkoutView"
+        android:id="@+id/tvPlaceLocalityDistance"
         style="@style/TextStyleReg14SecWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
