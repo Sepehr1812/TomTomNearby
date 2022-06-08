@@ -75,7 +75,7 @@
         android:layout_marginStart="@dimen/dimen_16"
         app:layout_constraintBottom_toBottomOf="@id/tvPlaceTitle"
         app:layout_constraintStart_toEndOf="@id/tvPlaceTitle"
-        tools:text="US, NY" />
+        tools:text="NY, US" />
 
     <TextView
         android:id="@+id/tvPlaceAddress"
