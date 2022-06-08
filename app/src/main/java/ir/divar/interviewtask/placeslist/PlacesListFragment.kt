@@ -2,7 +2,10 @@ package ir.divar.interviewtask.placeslist
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Looper
 import android.view.LayoutInflater
@@ -50,7 +53,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
             Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_LONG).show()
 
-            checkIfApiCallIsRequired()
+            if (isNetworkConnected()) checkIfApiCallIsRequired()
         }
     }
 
@@ -112,6 +115,17 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     requireContext(),
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
+
+    private fun isNetworkConnected(): Boolean {
+        val connectivityManager =
+            requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw =
+            connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+    }
 
     /**
      * Checks the distance between current location of the user and the last location of the API call
