@@ -33,4 +33,9 @@ class PlaceDetailsFragment : Fragment() {
         _binding = FragmentPlaceDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
 }

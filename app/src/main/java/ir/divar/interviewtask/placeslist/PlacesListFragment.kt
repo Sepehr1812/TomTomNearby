@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.divar.domain.place.model.Place
 import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
 
 
@@ -16,7 +18,7 @@ import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
  * @author Sepi 6/4/22
  */
 @AndroidEntryPoint
-class PlacesListFragment : Fragment() {
+class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     // region of properties
     private val placesListViewModel by viewModels<PlacesListViewModel>()
@@ -32,5 +34,16 @@ class PlacesListFragment : Fragment() {
     ): View {
         _binding = FragmentPlacesListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onItemClickListener(place: Place) {
+        findNavController().navigate(
+            PlacesListFragmentDirections.actionPlacesListFragmentToPlaceDetailsFragment(place)
+        )
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

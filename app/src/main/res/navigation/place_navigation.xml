@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/place_navigation"
+    app:startDestination="@id/placesListFragment">
+
+    <fragment
+        android:id="@+id/placesListFragment"
+        android:name="ir.divar.interviewtask.placeslist.PlacesListFragment"
+        android:label="PlacesListFragment"
+        tools:layout="@layout/fragment_places_list">
+
+        <action
+            android:id="@+id/action_placesListFragment_to_placeDetailsFragment"
+            app:destination="@id/placeDetailsFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/slide_up"
+            app:popExitAnim="@anim/slide_up"
+            app:popUpTo="@layout/fragment_places_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/placeDetailsFragment"
+        android:name="ir.divar.interviewtask.placedetails.PlaceDetailsFragment"
+        android:label="PlaceDetailsFragment"
+        tools:layout="@layout/fragment_place_details">
+
+        <argument
+            android:name="place"
+            app:argType="ir.divar.domain.place.model.Place"
+            app:nullable="false" />
+    </fragment>
+
+</navigation>

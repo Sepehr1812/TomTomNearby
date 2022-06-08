@@ -42,4 +42,10 @@
         <item name="android:textColor">@color/primary_black</item>
     </style>
 
+    <style name="TextStyleBold24PriBlack">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:textColor">@color/primary_black</item>
+    </style>
+
 </resources>

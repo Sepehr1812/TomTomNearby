@@ -10,6 +10,7 @@
     <dimen name="dimen_24">24dp</dimen>
     <dimen name="dimen_40">40dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
+    <dimen name="dimen_72">72dp</dimen>
     <dimen name="dimen_360">360dp</dimen>
 
     <!-- Text Sizes -->
@@ -17,5 +18,6 @@
     <dimen name="text_size_16">16sp</dimen>
     <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_22">22sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
 
 </resources>

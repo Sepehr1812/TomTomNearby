@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvPlaceListBar"
+        style="@style/TextStyleBold24PriBlack"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_72"
+        android:gravity="center"
+        android:text="@string/nearby_places"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPlaceList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:paddingVertical="@dimen/dimen_8"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceListBar"
         tools:listitem="@layout/item_place" />
 
     <TextView

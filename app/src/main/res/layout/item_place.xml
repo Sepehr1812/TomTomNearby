@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:outlineAmbientShadowColor="@color/shadow_gray"
     android:outlineSpotShadowColor="@color/shadow_gray"
-    android:padding="@dimen/dimen_10"
+    android:padding="@dimen/dimen_20"
     tools:targetApi="p">
 
     <TextView
@@ -37,7 +37,6 @@
         style="@style/TextStyleReg14SecWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_8"
         tools:text="Manhattan | 300 m" />
 
 </LinearLayout>
