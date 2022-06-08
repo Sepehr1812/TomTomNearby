@@ -77,14 +77,14 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!isLocationGranted()) requestLocationAccess()
-        else requestLocation()
-
         locationRequest = LocationRequest.create().apply {
             interval = 10000L
             fastestInterval = 10000L
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         }
+
+        if (!isLocationGranted()) requestLocationAccess()
+        else requestLocation()
     }
 
     override fun onCreateView(
