@@ -6,10 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.divar.domain.place.model.Place
-import ir.divar.domain.place.usecase.ClearPlaceList
-import ir.divar.domain.place.usecase.GetPlaceListFromLocal
-import ir.divar.domain.place.usecase.GetPlaceListFromServer
-import ir.divar.domain.place.usecase.InsertPlaceList
+import ir.divar.domain.place.usecase.*
 import ir.divar.domain.remote.BaseResult
 import ir.divar.interviewtask.util.Constants.PROBLEM_OCCURRED_ERROR_MESSAGE
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -21,6 +18,7 @@ import ir.divar.domain.place.model.PlaceGeocode as PlaceModelLatLng
 class PlacesListViewModel @Inject constructor(
     private val getPlaceListFromLocal: GetPlaceListFromLocal,
     private val getPlaceListFromServer: GetPlaceListFromServer,
+    private val getPlaceListByLinkFromServer: GetPlaceListByLinkFromServer,
     private val insertPlaceList: InsertPlaceList,
     private val clearPlaceList: ClearPlaceList
 ) : ViewModel() {
@@ -28,8 +26,13 @@ class PlacesListViewModel @Inject constructor(
     val getLocalPlaceListResponse = MutableLiveData<List<Place>>()
     val getLocalPlaceListError = MutableLiveData<Unit>()
 
+    val getServerPlaceListNextUrlResponse = MutableLiveData<String?>()
+
     val getServerPlaceListResponse = MutableLiveData<List<Place>>()
     val getServerPlaceListError = MutableLiveData<String>()
+
+    val getServerPlaceListByLinkResponse = MutableLiveData<List<Place>>()
+    val getServerPlaceListByLinkError = MutableLiveData<String>()
 
     val insertPlaceListResponse = MutableLiveData<Unit>()
     val insertPlaceListError = MutableLiveData<Unit>()
@@ -58,11 +61,32 @@ class PlacesListViewModel @Inject constructor(
                 )
             ).also {
                 when (it) {
-                    is BaseResult.Success -> it.data?.also { placeList ->
+                    is BaseResult.Success -> it.data?.first?.also { placeList ->
                         getServerPlaceListResponse.value = placeList
+                        getServerPlaceListNextUrlResponse.value = it.data?.second
                     } ?: apply { getServerPlaceListError.value = PROBLEM_OCCURRED_ERROR_MESSAGE }
 
                     is BaseResult.Error -> getServerPlaceListError.value =
+                        it.message ?: PROBLEM_OCCURRED_ERROR_MESSAGE
+                }
+            }
+        }
+    }
+
+    fun getServerPlaceListByLink(url: String) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            getPlaceListByLinkFromServer.executeUseCase(
+                GetPlaceListByLinkFromServer.RequestValues(url)
+            ).also {
+                when (it) {
+                    is BaseResult.Success -> it.data?.first?.also { placeList ->
+                        getServerPlaceListByLinkResponse.value = placeList
+                        getServerPlaceListNextUrlResponse.value = it.data?.second
+                    } ?: apply {
+                        getServerPlaceListByLinkError.value = PROBLEM_OCCURRED_ERROR_MESSAGE
+                    }
+
+                    is BaseResult.Error -> getServerPlaceListByLinkError.value =
                         it.message ?: PROBLEM_OCCURRED_ERROR_MESSAGE
                 }
             }
