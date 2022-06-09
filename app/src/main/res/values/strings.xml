@@ -9,4 +9,6 @@
     <string name="no_location">user location can not be obtained.</string>
     <string name="no_data">places data can not be obtained.</string>
     <string name="problem_occurred">a problem occurred.</string>
+    <string name="request_permission">We need to have access to your precise location data. Please grant access or leave the app.</string>
+    <string name="grant_permission">Grant Permission</string>
 </resources>

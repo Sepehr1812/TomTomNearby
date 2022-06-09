@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,7 +33,6 @@ import ir.divar.interviewtask.util.toGmsLatLng
 class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallback {
 
     // region of properties
-    private val placeDetailsViewModel by viewModels<PlaceDetailsViewModel>()
     private val args by navArgs<PlaceDetailsFragmentArgs>()
     private var _binding: FragmentPlaceDetailsBinding? = null
     private val binding get() = _binding!!

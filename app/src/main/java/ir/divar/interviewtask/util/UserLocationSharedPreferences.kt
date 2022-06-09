@@ -15,8 +15,9 @@ import kotlin.properties.Delegates
 object UserLocationSharedPreferences {
 
     // region of properties
-    private const val userLocationPref = "user_location_pref"
-    private const val userLocationPrefKey = "user_location_pref_key"
+    private const val USER_LOCATION_PREF = "user_location_pref"
+    private const val USER_LOCATION_PREF_KEY = "user_location_pref_key"
+    private const val PERMISSION_DENIED_KEY = "permission_denied_key"
     private var userLocationPreference: SharedPreferences by Delegates.notNull()
 
     // END of region of properties
@@ -27,15 +28,33 @@ object UserLocationSharedPreferences {
      * @return [UserLocationSharedPreferences]
      */
     fun initialWith(ctx: Context): UserLocationSharedPreferences {
-        userLocationPreference = ctx.getSharedPreferences(userLocationPref, Context.MODE_PRIVATE)
+        userLocationPreference = ctx.getSharedPreferences(USER_LOCATION_PREF, Context.MODE_PRIVATE)
         return UserLocationSharedPreferences
     }
 
+    /** Saves the last location that API is called by it. */
     fun saveLocation(latLng: LatLng) {
         userLocationPreference.edit {
-            putString(userLocationPrefKey, latLng.toLocalString())
+            putString(USER_LOCATION_PREF_KEY, latLng.toLocalString())
         }
     }
 
-    fun getLastLocation() = userLocationPreference.getString(userLocationPrefKey, null)?.toLatLang()
+    /** @return the last location that API is called by it. */
+    fun getLastLocation() =
+        userLocationPreference.getString(USER_LOCATION_PREF_KEY, null)?.toLatLang()
+
+    /**
+     * @return `true` if Location permission request has been denied at least once, `false` otherwise.
+     */
+    fun isLocationPermissionDeniedBefore() =
+        userLocationPreference.getBoolean(PERMISSION_DENIED_KEY, false)
+
+    /**
+     * sets PERMISSION_DENIED_KEY `true` when user denies Location permission request for the first time.
+     */
+    fun setLocationPermissionDenied() {
+        userLocationPreference.edit {
+            putBoolean(PERMISSION_DENIED_KEY, true)
+        }
+    }
 }

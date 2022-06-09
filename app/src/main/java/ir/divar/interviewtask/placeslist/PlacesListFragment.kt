@@ -3,11 +3,14 @@ package ir.divar.interviewtask.placeslist
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.divar.domain.place.model.Place
 import ir.divar.interviewtask.R
 import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
+import ir.divar.interviewtask.util.Constants
+import ir.divar.interviewtask.util.DialogHelper
 import ir.divar.interviewtask.util.UserLocationSharedPreferences
 
 
@@ -67,9 +72,16 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     private val permissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
-        // TODO: handle if fine location permission is not granted
         if (it.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false))
             requestLocation()
+        else {
+            userLocationSharedPreferences.setLocationPermissionDenied()
+            showPermissionRequestDialog(
+                shouldShowRequestPermissionRationale(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            )
+        }
     }
 
     // END of region of properties
@@ -82,9 +94,6 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             fastestInterval = 10000L
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
         }
-
-        if (!isLocationGranted()) requestLocationAccess()
-        else requestLocation()
     }
 
     override fun onCreateView(
@@ -98,6 +107,16 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!isLocationGranted()) {
+            if (userLocationSharedPreferences.isLocationPermissionDeniedBefore())
+                showPermissionRequestDialog(
+                    shouldShowRequestPermissionRationale(
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                )
+            else requestLocationAccess()
+        } else requestLocation()
 
         initialView()
         subscribeView()
@@ -172,6 +191,37 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
             )
+        )
+    }
+
+    /**
+     * Shows an informing dialog about our need to have location access.
+     *
+     * @param needSettings `true` if OS does not allow showing permission dialog and
+     *  user needs to go to Settings to grant permission.
+     */
+    private fun showPermissionRequestDialog(needSettings: Boolean) {
+        DialogHelper.showInfoMessage(
+            requireActivity(),
+            getString(R.string.request_permission),
+            getString(R.string.grant_permission)
+        ) {
+            if (!needSettings)
+                requestLocationAccess()
+            else openSettings()
+        }
+    }
+
+    /** Opens App Info page in Settings to help user granting the permission. */
+    private fun openSettings() {
+        startActivity(
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.fromParts(
+                    Constants.PACKAGE,
+                    requireContext().packageName,
+                    null
+                )
+            }
         )
     }
 

@@ -43,6 +43,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextStyleReg22Black">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="TextStyleBold22PriBlack">
         <item name="android:fontFamily">@font/josefin_sans_bold</item>
         <item name="android:textSize">@dimen/text_size_22</item>
@@ -53,6 +59,16 @@
         <item name="android:fontFamily">@font/josefin_sans_bold</item>
         <item name="android:textSize">@dimen/text_size_24</item>
         <item name="android:textColor">@color/primary_black</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="android:textAppearanceMedium">@style/TextStyleReg22Black</item>
+        <item name="android:textAppearanceSmall">@style/TextStyleReg22Black</item>
+        <item name="android:textAppearanceLarge">@style/TextStyleReg22Black</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/black</item>
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
     </style>
 
 </resources>
