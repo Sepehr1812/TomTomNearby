@@ -29,7 +29,7 @@ interface IPlaceApi : GeneralApi {
         "Accept: application/json",
         "Authorization: ${BuildConfig.FSQ_AUTHORIZATION_TOKEN}"
     )
-    @GET("places/search")
+    @GET
     suspend fun getPlacesByLink(
         @Url url: String
     ): Response<ApiResponse<List<PlaceRemoteModel>>>
