@@ -116,15 +116,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                 )
             )
 
-            uiSettings.apply {
-                isMyLocationButtonEnabled = true
-                isRotateGesturesEnabled = true
-                isScrollGesturesEnabled = true
-                isMapToolbarEnabled = true
-                isZoomControlsEnabled = true
-                isZoomGesturesEnabled = true
-                isCompassEnabled = true
-            }
+            uiSettings.isZoomControlsEnabled = true
         }
     }
 

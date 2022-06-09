@@ -26,7 +26,7 @@
         android:layout_width="@dimen/dimen_48"
         android:layout_height="@dimen/dimen_48"
         android:layout_marginStart="@dimen/dimen_12"
-        android:layout_marginTop="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_48"
         android:background="@drawable/background_round_gray"
         android:contentDescription="@string/back_button_desc"
         android:padding="@dimen/dimen_12"
