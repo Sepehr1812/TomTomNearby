@@ -65,7 +65,6 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
-            Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_SHORT).show()
 
             if (isNetworkConnected()) checkIfApiCallIsRequired()
             // obtain data from local Db when there is no Internet connection
