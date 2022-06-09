@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">DivarInterviewTask</string>
+    <string name="app_name">MiniFourSquare</string>
+    <string name="nearby_places">Nearby Places</string>
+    <string name="no_places">There is no place nearby.</string>
+    <string name="back_button_desc">Back</string>
+    <string name="locality_distance_placeholder">%1$s | %2$d</string>
+    <string name="region_country_placeholder">%1$s, %2$s</string>
+    <string name="distance_placeholder">%1$d meters</string>
+    <string name="no_location">user location can not be obtained.</string>
+    <string name="no_data">places data can not be obtained.</string>
+    <string name="problem_occurred">a problem occurred.</string>
+    <string name="request_permission">We need to have access to your precise location data. Please grant access or leave the app.</string>
+    <string name="grant_permission">Grant Permission</string>
 </resources>

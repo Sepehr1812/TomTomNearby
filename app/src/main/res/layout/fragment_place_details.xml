@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fcvPlaceMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0"
+        app:layout_constraintBottom_toBottomOf="@id/glPlace"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/shadow_gray" />
+
+    <ImageView
+        android:id="@+id/imgPlaceBack"
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginStart="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_48"
+        android:background="@drawable/background_round_gray"
+        android:contentDescription="@string/back_button_desc"
+        android:padding="@dimen/dimen_12"
+        android:rotation="180"
+        android:src="@drawable/ic_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPlaceDistance"
+        style="@style/TextStyleReg16White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_20"
+        android:layout_marginBottom="@dimen/dimen_32"
+        android:background="@drawable/background_gray_radius12"
+        android:drawablePadding="@dimen/dimen_8"
+        android:paddingHorizontal="@dimen/dimen_8"
+        android:paddingVertical="@dimen/dimen_4"
+        app:drawableEndCompat="@drawable/ic_distance"
+        app:layout_constraintBottom_toBottomOf="@id/fcvPlaceMap"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="300 meters" />
+
+    <TextView
+        android:id="@+id/tvPlaceCategory"
+        style="@style/TextStyleReg14TerWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        android:background="@drawable/background_gray_radius12"
+        android:backgroundTint="@color/background_gray"
+        android:padding="@dimen/dimen_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcvPlaceMap"
+        tools:text="Restaurant" />
+
+    <TextView
+        android:id="@+id/tvPlaceTitle"
+        style="@style/TextStyleBold22PriBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceCategory"
+        tools:text="McDonald" />
+
+    <TextView
+        android:id="@+id/tvPlaceRegion"
+        style="@style/TextStyleReg14TerWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        app:layout_constraintBottom_toBottomOf="@id/tvPlaceTitle"
+        app:layout_constraintStart_toEndOf="@id/tvPlaceTitle"
+        tools:text="NY, US" />
+
+    <TextView
+        android:id="@+id/tvPlaceAddress"
+        style="@style/TextStyleReg16SecBlack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_24"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceTitle"
+        tools:text="Street 34, Manhattan, NY, US." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

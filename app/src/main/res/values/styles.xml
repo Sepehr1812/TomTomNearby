@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextStyleReg14SecWhite">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/secondary_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg14White">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg14TerWhite">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/tertiary_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg16SecBlack">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@color/secondary_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg16White">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg18TerWhite">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">@color/tertiary_white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg22Black">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextStyleBold22PriBlack">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_22</item>
+        <item name="android:textColor">@color/primary_black</item>
+    </style>
+
+    <style name="TextStyleBold24PriBlack">
+        <item name="android:fontFamily">@font/josefin_sans_bold</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:textColor">@color/primary_black</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.Material3.Light.Dialog.Alert">
+        <item name="android:textAppearanceMedium">@style/TextStyleReg22Black</item>
+        <item name="android:textAppearanceSmall">@style/TextStyleReg22Black</item>
+        <item name="android:textAppearanceLarge">@style/TextStyleReg22Black</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/black</item>
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+    </style>
+
+</resources>
