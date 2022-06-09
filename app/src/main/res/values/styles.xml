@@ -15,17 +15,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextStyleReg14TerWhite">
-        <item name="android:fontFamily">@font/josefin_sans_regular</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textColor">@color/tertiary_white</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextStyleReg16SecBlack">
+    <style name="TextStyleReg16TerWhite">
         <item name="android:fontFamily">@font/josefin_sans_regular</item>
         <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:textColor">@color/secondary_black</item>
+        <item name="android:textColor">@color/tertiary_white</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -33,6 +26,13 @@
         <item name="android:fontFamily">@font/josefin_sans_regular</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyleReg18SecBlack">
+        <item name="android:fontFamily">@font/josefin_sans_regular</item>
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textColor">@color/secondary_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
