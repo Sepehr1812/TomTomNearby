@@ -23,6 +23,32 @@
         app:layout_constraintTop_toBottomOf="@id/tvPlaceListBar"
         tools:listitem="@layout/item_place" />
 
+    <ProgressBar
+        android:id="@+id/pbDefault"
+        android:layout_width="@dimen/dimen_72"
+        android:layout_height="@dimen/dimen_72"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/accent"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceListBar" />
+
+    <ProgressBar
+        android:id="@+id/pbLoadMore"
+        android:layout_width="@dimen/dimen_48"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/accent"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tvNoPlaces"
         style="@style/TextStyleReg18TerWhite"

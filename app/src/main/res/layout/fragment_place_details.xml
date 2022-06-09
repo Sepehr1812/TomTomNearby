@@ -53,7 +53,7 @@
 
     <TextView
         android:id="@+id/tvPlaceCategory"
-        style="@style/TextStyleReg14TerWhite"
+        style="@style/TextStyleReg16TerWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_24"
@@ -67,33 +67,42 @@
 
     <TextView
         android:id="@+id/tvPlaceTitle"
-        style="@style/TextStyleBold22PriBlack"
-        android:layout_width="wrap_content"
+        style="@style/TextStyleBold24PriBlack"
+        android:layout_width="@dimen/dimen_0"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_24"
         android:layout_marginTop="@dimen/dimen_24"
+        android:layout_marginEnd="@dimen/dimen_24"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPlaceCategory"
         tools:text="McDonald" />
 
     <TextView
         android:id="@+id/tvPlaceRegion"
-        style="@style/TextStyleReg14TerWhite"
+        style="@style/TextStyleReg16TerWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_16"
-        app:layout_constraintBottom_toBottomOf="@id/tvPlaceTitle"
-        app:layout_constraintStart_toEndOf="@id/tvPlaceTitle"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceTitle"
         tools:text="NY, US" />
 
     <TextView
         android:id="@+id/tvPlaceAddress"
-        style="@style/TextStyleReg16SecBlack"
+        style="@style/TextStyleReg18SecBlack"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_0"
         android:layout_marginHorizontal="@dimen/dimen_24"
         android:layout_marginTop="@dimen/dimen_24"
-        app:layout_constraintTop_toBottomOf="@id/tvPlaceTitle"
+        android:layout_marginBottom="@dimen/dimen_32"
+        android:ellipsize="end"
+        android:maxLines="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPlaceRegion"
         tools:text="Street 34, Manhattan, NY, US." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

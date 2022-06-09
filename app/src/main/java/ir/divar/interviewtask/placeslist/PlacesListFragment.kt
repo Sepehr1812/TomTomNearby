@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -54,6 +55,9 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     private lateinit var placeAdapter: PlaceAdapter
     private val placeList = mutableListOf<Place>()
+
+    // the next page link we use for implement pagination for places list
+    private var nextLink: String? = null
 
     private var currentLocation: LatLng? = null
     private lateinit var locationRequest: LocationRequest
@@ -127,7 +131,21 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             layoutManager = LinearLayoutManager(requireContext())
             placeAdapter = PlaceAdapter(placeList, this@PlacesListFragment)
             adapter = placeAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (!canScrollVertically(1 /* scroll down */))
+                    // request for the next page of places if available
+                        nextLink?.also {
+                            binding.pbLoadMore.visibility = View.VISIBLE
+                            placesListViewModel.getServerPlaceListByLink(it)
+                        }
+                }
+            })
         }
+
+        binding.pbDefault.visibility = View.VISIBLE
     }
 
     private fun subscribeView() {
@@ -164,6 +182,25 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placesListViewModel.getLocalPlaceList()
         }
 
+        placesListViewModel.getServerPlaceListNextUrlResponse.observe(viewLifecycleOwner) {
+            nextLink = it
+        }
+
+        placesListViewModel.getServerPlaceListByLinkResponse.observe(viewLifecycleOwner) {
+            val oldSize = placeList.size
+            placeList.addAll(it)
+            placeAdapter.notifyItemRangeInserted(oldSize, placeList.size)
+
+            binding.pbLoadMore.visibility = View.GONE
+
+            placesListViewModel.insertPlaceList(it)
+        }
+
+        placesListViewModel.getServerPlaceListByLinkError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            binding.pbLoadMore.visibility = View.GONE
+        }
+
         placesListViewModel.insertPlaceListResponse.observe(viewLifecycleOwner) {
 
         }
@@ -183,6 +220,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     private fun displayNoPlacesTextView() {
         binding.tvNoPlaces.visibility = if (placeList.isNotEmpty()) View.GONE else View.VISIBLE
+        binding.pbDefault.visibility = View.GONE
     }
 
     private fun requestLocationAccess() {

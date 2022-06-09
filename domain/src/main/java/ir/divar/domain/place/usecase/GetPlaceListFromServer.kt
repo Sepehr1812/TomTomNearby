@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class GetPlaceListFromServer @Inject constructor(
     private val iPlacesRepository: IPlacesRepository
-) : GeneralUsecase<GetPlaceListFromServer.RequestValues, BaseResult<List<Place>, String>>() {
+) : GeneralUsecase<GetPlaceListFromServer.RequestValues, BaseResult<Pair<List<Place>?, String?>, String>>() {
 
     data class RequestValues(val placeGeocode: PlaceGeocode) : RequestValue
 

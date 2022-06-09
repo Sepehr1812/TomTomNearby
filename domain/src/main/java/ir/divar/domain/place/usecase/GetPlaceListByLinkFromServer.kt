@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetPlaceListByLinkFromServer @Inject constructor(
     private val iPlacesRepository: IPlacesRepository
-) : GeneralUsecase<GetPlaceListByLinkFromServer.RequestValues, BaseResult<List<Place>, String>>() {
+) : GeneralUsecase<GetPlaceListByLinkFromServer.RequestValues, BaseResult<Pair<List<Place>?, String?>, String>>() {
 
     data class RequestValues(val url: String) : RequestValue
 
