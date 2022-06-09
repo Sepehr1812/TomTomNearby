@@ -137,10 +137,15 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!canScrollVertically(1 /* scroll down */))
                     // request for the next page of places if available
-                        nextLink?.also { placesListViewModel.getServerPlaceListByLink(it) }
+                        nextLink?.also {
+                            binding.pbLoadMore.visibility = View.VISIBLE
+                            placesListViewModel.getServerPlaceListByLink(it)
+                        }
                 }
             })
         }
+
+        binding.pbDefault.visibility = View.VISIBLE
     }
 
     private fun subscribeView() {
@@ -186,11 +191,14 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placeList.addAll(it)
             placeAdapter.notifyItemRangeInserted(oldSize, placeList.size)
 
+            binding.pbLoadMore.visibility = View.GONE
+
             placesListViewModel.insertPlaceList(it)
         }
 
         placesListViewModel.getServerPlaceListByLinkError.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            binding.pbLoadMore.visibility = View.GONE
         }
 
         placesListViewModel.insertPlaceListResponse.observe(viewLifecycleOwner) {
@@ -212,6 +220,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     private fun displayNoPlacesTextView() {
         binding.tvNoPlaces.visibility = if (placeList.isNotEmpty()) View.GONE else View.VISIBLE
+        binding.pbDefault.visibility = View.GONE
     }
 
     private fun requestLocationAccess() {
