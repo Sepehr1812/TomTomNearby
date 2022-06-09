@@ -14,10 +14,10 @@
         <action
             android:id="@+id/action_placesListFragment_to_placeDetailsFragment"
             app:destination="@id/placeDetailsFragment"
-            app:enterAnim="@anim/slide_up"
-            app:exitAnim="@anim/slide_up"
-            app:popEnterAnim="@anim/slide_up"
-            app:popExitAnim="@anim/slide_up"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/slide_left"
+            app:popEnterAnim="@anim/slide_right"
+            app:popExitAnim="@anim/slide_right"
             app:popUpTo="@layout/fragment_places_list" />
     </fragment>
 

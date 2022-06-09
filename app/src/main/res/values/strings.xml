@@ -5,7 +5,7 @@
     <string name="back_button_desc">Back</string>
     <string name="locality_distance_placeholder">%1$s | %2$d</string>
     <string name="region_country_placeholder">%1$s, %2$s</string>
-    <string name="distance_placeholder">%1$d m</string>
+    <string name="distance_placeholder">%1$d meters</string>
     <string name="no_location">user location can not be obtained.</string>
     <string name="no_data">places data can not be obtained.</string>
     <string name="problem_occurred">a problem occurred.</string>

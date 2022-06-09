@@ -27,6 +27,7 @@
         android:layout_height="@dimen/dimen_48"
         android:layout_marginStart="@dimen/dimen_12"
         android:layout_marginTop="@dimen/dimen_40"
+        android:background="@drawable/background_round_gray"
         android:contentDescription="@string/back_button_desc"
         android:padding="@dimen/dimen_12"
         android:rotation="180"
@@ -36,7 +37,7 @@
 
     <TextView
         android:id="@+id/tvPlaceDistance"
-        style="@style/TextStyleReg14White"
+        style="@style/TextStyleReg16White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_20"
@@ -48,7 +49,7 @@
         app:drawableEndCompat="@drawable/ic_distance"
         app:layout_constraintBottom_toBottomOf="@id/fcvPlaceMap"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="300 Meters" />
+        tools:text="300 meters" />
 
     <TextView
         android:id="@+id/tvPlaceCategory"

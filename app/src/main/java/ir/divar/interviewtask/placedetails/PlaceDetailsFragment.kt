@@ -112,7 +112,7 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                         include(args.place.geocode.toGmsLatLng())
                         include(args.currentLocation)
                     }.build(),
-                    8
+                    300
                 )
             )
 

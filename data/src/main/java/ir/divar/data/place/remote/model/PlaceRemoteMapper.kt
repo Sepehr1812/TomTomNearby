@@ -10,9 +10,9 @@ object PlaceRemoteMapper {
     }
 
     private fun convertCategoryListToString(categories: List<PlaceCategory>): String {
-        val result = ""
+        var result = ""
         categories.forEach {
-            result.plus(it.name).plus(", ")
+            result = result.plus(it.name).plus(", ")
         }
 
         return result.removeSuffix(", ")
