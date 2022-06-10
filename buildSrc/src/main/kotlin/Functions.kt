@@ -1,15 +1,10 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 /* ***** functions for adding the different type dependencies in build.gradle.kts file ***** */
+
 fun DependencyHandler.kapt(list: List<String>) {
     list.forEach { dependency ->
         add("kapt", dependency)
-    }
-}
-
-fun DependencyHandler.debugImplementation(list: List<String>) {
-    list.forEach { dependency ->
-        add("debugImplementation", dependency)
     }
 }
 

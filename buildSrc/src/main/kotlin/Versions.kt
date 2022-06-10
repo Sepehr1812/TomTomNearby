@@ -1,5 +1,9 @@
 object Versions {
 
+    const val androidApplication = "7.2.0"
+    const val androidLibrary = "7.2.0"
+    const val kotlinAndroid = "1.6.10"
+
     const val daggerHiltGradlePlugin = "2.38.1"
     const val secretsGradlePlugin = "2.0.1"
     const val androidxNavigationSafeArgsGradlePlugin = "2.4.2"
