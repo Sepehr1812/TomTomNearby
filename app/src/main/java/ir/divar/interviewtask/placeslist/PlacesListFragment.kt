@@ -120,6 +120,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     )
                 )
             else requestLocationAccess()
+
+            placesListViewModel.getLocalPlaceList()
         } else requestLocation()
 
         initialView()
