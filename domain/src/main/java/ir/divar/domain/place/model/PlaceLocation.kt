@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PlaceLocation(
-    val country: String,
-    val locality: String,
-    val region: String,
+    val country: String = "",
+    val locality: String = "",
+    val region: String = "",
     @SerializedName("formatted_address")
-    val formattedAddress: String
+    val formattedAddress: String = ""
 ) : Parcelable

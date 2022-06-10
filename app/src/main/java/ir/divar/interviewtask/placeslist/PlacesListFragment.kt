@@ -65,7 +65,6 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
-            Toast.makeText(requireContext(), "$currentLocation", Toast.LENGTH_SHORT).show()
 
             if (isNetworkConnected()) checkIfApiCallIsRequired()
             // obtain data from local Db when there is no Internet connection
@@ -94,6 +93,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
 
         locationRequest = LocationRequest.create().apply {
+            // smallestDisplacement = 100f  -> interesting idea
             interval = 10000L
             fastestInterval = 10000L
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
@@ -120,6 +120,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     )
                 )
             else requestLocationAccess()
+
+            placesListViewModel.getLocalPlaceList()
         } else requestLocation()
 
         initialView()
@@ -145,7 +147,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             })
         }
 
-        binding.pbDefault.visibility = View.VISIBLE
+        if (placeList.isEmpty()) binding.pbDefault.visibility = View.VISIBLE
     }
 
     private fun subscribeView() {
@@ -342,6 +344,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     override fun onDestroyView() {
         _binding = null
+        LocationServices.getFusedLocationProviderClient(requireContext())
+            .removeLocationUpdates(locationCallback)
         super.onDestroyView()
     }
 }
