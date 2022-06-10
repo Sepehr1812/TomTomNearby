@@ -93,6 +93,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
         super.onCreate(savedInstanceState)
 
         locationRequest = LocationRequest.create().apply {
+            // smallestDisplacement = 100f  -> interesting idea
             interval = 10000L
             fastestInterval = 10000L
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
@@ -144,7 +145,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             })
         }
 
-        binding.pbDefault.visibility = View.VISIBLE
+        if (placeList.isEmpty()) binding.pbDefault.visibility = View.VISIBLE
     }
 
     private fun subscribeView() {
@@ -341,6 +342,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
 
     override fun onDestroyView() {
         _binding = null
+        LocationServices.getFusedLocationProviderClient(requireContext())
+            .removeLocationUpdates(locationCallback)
         super.onDestroyView()
     }
 }

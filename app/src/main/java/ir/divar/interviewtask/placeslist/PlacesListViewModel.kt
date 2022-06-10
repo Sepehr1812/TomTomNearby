@@ -1,6 +1,5 @@
 package ir.divar.interviewtask.placeslist
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
@@ -9,6 +8,7 @@ import ir.divar.domain.place.model.Place
 import ir.divar.domain.place.usecase.*
 import ir.divar.domain.remote.BaseResult
 import ir.divar.interviewtask.util.Constants.PROBLEM_OCCURRED_ERROR_MESSAGE
+import ir.divar.interviewtask.util.SingleLiveEvent
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,22 +23,22 @@ class PlacesListViewModel @Inject constructor(
     private val clearPlaceList: ClearPlaceList
 ) : ViewModel() {
 
-    val getLocalPlaceListResponse = MutableLiveData<List<Place>>()
-    val getLocalPlaceListError = MutableLiveData<Unit>()
+    val getLocalPlaceListResponse = SingleLiveEvent<List<Place>>()
+    val getLocalPlaceListError = SingleLiveEvent<Unit>()
 
-    val getServerPlaceListNextUrlResponse = MutableLiveData<String?>()
+    val getServerPlaceListNextUrlResponse = SingleLiveEvent<String?>()
 
-    val getServerPlaceListResponse = MutableLiveData<List<Place>>()
-    val getServerPlaceListError = MutableLiveData<String>()
+    val getServerPlaceListResponse = SingleLiveEvent<List<Place>>()
+    val getServerPlaceListError = SingleLiveEvent<String>()
 
-    val getServerPlaceListByLinkResponse = MutableLiveData<List<Place>>()
-    val getServerPlaceListByLinkError = MutableLiveData<String>()
+    val getServerPlaceListByLinkResponse = SingleLiveEvent<List<Place>>()
+    val getServerPlaceListByLinkError = SingleLiveEvent<String>()
 
-    val insertPlaceListResponse = MutableLiveData<Unit>()
-    val insertPlaceListError = MutableLiveData<Unit>()
+    val insertPlaceListResponse = SingleLiveEvent<Unit>()
+    val insertPlaceListError = SingleLiveEvent<Unit>()
 
-    val clearPlaceListResponse = MutableLiveData<Unit>()
-    val clearPlaceListError = MutableLiveData<Unit>()
+    val clearPlaceListResponse = SingleLiveEvent<Unit>()
+    val clearPlaceListError = SingleLiveEvent<Unit>()
 
     /** handles exceptions may be occurred in coroutine scopes */
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, e ->
