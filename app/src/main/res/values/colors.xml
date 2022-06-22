@@ -5,9 +5,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="accent">#F94877</color>
-    <color name="secondary_accent">#B64857</color>
-    <color name="tertiary_accent">#FF91AE</color>
+    <color name="accent">#ED161F</color>
+    <color name="secondary_accent">#AF1618</color>
+    <color name="tertiary_accent">#E8474E</color>
     <color name="gray">#CC5C5C61</color>
     <color name="shadow_gray">#B5B5B5</color>
     <color name="background_gray">#EBF3F5</color>
