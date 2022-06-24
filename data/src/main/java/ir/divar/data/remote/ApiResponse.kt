@@ -1,5 +1,6 @@
 package ir.divar.data.remote
 
+import com.google.gson.annotations.SerializedName
 import ir.divar.domain.remote.BaseResult
 
 
@@ -8,8 +9,10 @@ import ir.divar.domain.remote.BaseResult
  *
  * @author Sepi 6/6/22
  */
-data class ApiResponse<T : Any>(
-    val results: T? = null,
+data class ApiResponse<T : Any, V : Any>(
+    val summary: T? = null,
+    val results: V? = null,
+    @SerializedName("errorText")
     val message: String? = null,
 ) {
 

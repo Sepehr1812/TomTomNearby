@@ -68,10 +68,10 @@ class PlaceDetailsFragment : Fragment(), View.OnClickListener, OnMapReadyCallbac
                 tvPlaceTitle.text = name
                 tvPlaceRegion.text = getString(
                     R.string.region_country_placeholder,
-                    location.region,
-                    location.country
+                    address.region,
+                    address.countryCode
                 )
-                tvPlaceAddress.text = location.formattedAddress
+                tvPlaceAddress.text = address.freeformAddress
 
                 imgPlaceBack.setOnClickListener(this@PlaceDetailsFragment)
             }

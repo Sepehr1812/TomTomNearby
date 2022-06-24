@@ -1,16 +1,21 @@
 package ir.divar.data.place.remote.model
 
 import com.google.gson.annotations.SerializedName
-import ir.divar.domain.place.model.PlaceCategory
-import ir.divar.domain.place.model.PlaceGeocodes
-import ir.divar.domain.place.model.PlaceLocation
+import ir.divar.domain.place.model.PlaceAddress
+import ir.divar.domain.place.model.PlacePosition
 
 data class PlaceRemoteModel(
-    @SerializedName("fsq_id")
     val id: String,
-    val name: String,
-    val categories: List<PlaceCategory>,
-    val distance: Int,
-    val geocodes: PlaceGeocodes,
-    val location: PlaceLocation
-)
+    @SerializedName("dist")
+    val distance: Double = -1.0,
+    @SerializedName("poi")
+    val placeInfo: PlaceInfoRemoteModel,
+    val address: PlaceAddress,
+    val position: PlacePosition
+) {
+
+    data class PlaceInfoRemoteModel(
+        val name: String,
+        val categories: List<String>
+    )
+}

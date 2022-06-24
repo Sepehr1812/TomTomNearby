@@ -141,7 +141,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     // request for the next page of places if available
                         nextLink?.also {
                             binding.pbLoadMore.visibility = View.VISIBLE
-                            placesListViewModel.getServerPlaceListByLink(it)
+//                            placesListViewModel.getServerPlaceListByLink(it)
                         }
                 }
             })
