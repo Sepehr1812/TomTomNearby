@@ -12,8 +12,8 @@ class GetPlaceListFromServer @Inject constructor(
     private val iPlacesRepository: IPlacesRepository
 ) : GeneralUsecase<GetPlaceListFromServer.RequestValues, BaseResult<Pair<PlaceSummaryResponse, List<Place>?>, String>>() {
 
-    data class RequestValues(val placePosition: PlacePosition) : RequestValue
+    data class RequestValues(val placePosition: PlacePosition, val offset: Int) : RequestValue
 
     override suspend fun executeUseCase(requestValues: RequestValues) =
-        iPlacesRepository.getPlacesFromServer(requestValues.placePosition)
+        iPlacesRepository.getPlacesFromServer(requestValues.placePosition, requestValues.offset)
 }

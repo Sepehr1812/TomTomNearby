@@ -13,9 +13,13 @@ class PlaceRemoteRepository @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
 
-    suspend fun getPlaces(placePosition: PlacePosition) = withContext(dispatcher) {
+    suspend fun getPlaces(placePosition: PlacePosition, offset: Int) = withContext(dispatcher) {
         iPlaceApi.safeApiCall {
-            getPlaces(placePosition.latitude.toFloat(), placePosition.longitude.toFloat(), 0).let {
+            getPlaces(
+                placePosition.latitude.toFloat(),
+                placePosition.longitude.toFloat(),
+                offset
+            ).let {
                 // extract data as a list of places
                 val results =
                     it.results?.map { place -> PlaceRemoteMapper.mapToDomain(place) }

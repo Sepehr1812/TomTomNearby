@@ -57,7 +57,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     private val placeList = mutableListOf<Place>()
 
     // the next page link we use for implement pagination for places list
-    private var nextLink: String? = null
+    private var nextOffset: Int? = null
 
     private var currentLocation: LatLng? = null
     private lateinit var locationRequest: LocationRequest
@@ -139,9 +139,11 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!canScrollVertically(1 /* scroll down */))
                     // request for the next page of places if available
-                        nextLink?.also {
+                        nextOffset?.also {
                             binding.pbLoadMore.visibility = View.VISIBLE
-//                            placesListViewModel.getServerPlaceListByLink(it)
+                            currentLocation?.let { latLng ->
+                                placesListViewModel.getServerPlaceList(latLng, it)
+                            }
                         }
                 }
             })
@@ -184,11 +186,11 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placesListViewModel.getLocalPlaceList()
         }
 
-        placesListViewModel.getServerPlaceListNextUrlResponse.observe(viewLifecycleOwner) {
-            nextLink = it
+        placesListViewModel.getServerPlaceListNextOffsetResponse.observe(viewLifecycleOwner) {
+            nextOffset = it
         }
 
-        placesListViewModel.getServerPlaceListByLinkResponse.observe(viewLifecycleOwner) {
+        placesListViewModel.getServerPlaceListByOffsetResponse.observe(viewLifecycleOwner) {
             val oldSize = placeList.size
             placeList.addAll(it)
             placeAdapter.notifyItemRangeInserted(oldSize, placeList.size)
@@ -198,7 +200,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placesListViewModel.insertPlaceList(it)
         }
 
-        placesListViewModel.getServerPlaceListByLinkError.observe(viewLifecycleOwner) {
+        placesListViewModel.getServerPlaceListByOffsetError.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             binding.pbLoadMore.visibility = View.GONE
         }

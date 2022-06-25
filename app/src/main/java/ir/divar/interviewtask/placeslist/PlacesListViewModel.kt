@@ -28,13 +28,13 @@ class PlacesListViewModel @Inject constructor(
     val getLocalPlaceListResponse = SingleLiveEvent<List<Place>>()
     val getLocalPlaceListError = SingleLiveEvent<Unit>()
 
-    val getServerPlaceListNextUrlResponse = SingleLiveEvent<String?>()
+    val getServerPlaceListNextOffsetResponse = SingleLiveEvent<Int?>()
 
     val getServerPlaceListResponse = SingleLiveEvent<List<Place>>()
     val getServerPlaceListError = SingleLiveEvent<String>()
 
-    val getServerPlaceListByLinkResponse = SingleLiveEvent<List<Place>>()
-    val getServerPlaceListByLinkError = SingleLiveEvent<String>()
+    val getServerPlaceListByOffsetResponse = SingleLiveEvent<List<Place>>()
+    val getServerPlaceListByOffsetError = SingleLiveEvent<String>()
 
     val insertPlaceListResponse = SingleLiveEvent<Unit>()
     val insertPlaceListError = SingleLiveEvent<Unit>()
@@ -55,21 +55,32 @@ class PlacesListViewModel @Inject constructor(
         }
     }
 
-    fun getServerPlaceList(latLng: LatLng) {
+    fun getServerPlaceList(latLng: LatLng, offset: Int = 0) {
         viewModelScope.launch(coroutineExceptionHandler) {
             getPlaceListFromServer.executeUseCase(
                 GetPlaceListFromServer.RequestValues(
-                    PlaceModelLatLng(latLng.latitude, latLng.longitude)
+                    PlaceModelLatLng(latLng.latitude, latLng.longitude),
+                    offset
                 )
             ).also {
                 when (it) {
                     is BaseResult.Success -> it.data?.second?.also { placeList ->
-                        getServerPlaceListResponse.value = placeList
-//                        getServerPlaceListNextUrlResponse.value = it.data?.first
+                        if (offset == 0)
+                            getServerPlaceListResponse.value = placeList
+                        else getServerPlaceListByOffsetResponse.value = placeList
+
+                        getServerPlaceListNextOffsetResponse.value = it.data?.first?.run {
+                            this.offset.plus(numResults).let { nextOffset ->
+                                if (nextOffset == totalResults) null else nextOffset
+                            }
+                        }
                     } ?: apply { getServerPlaceListError.value = PROBLEM_OCCURRED_ERROR_MESSAGE }
 
-                    is BaseResult.Error -> getServerPlaceListError.value =
-                        it.message ?: PROBLEM_OCCURRED_ERROR_MESSAGE
+                    is BaseResult.Error ->
+                        (it.message ?: PROBLEM_OCCURRED_ERROR_MESSAGE).also { message ->
+                            if (offset == 0) getServerPlaceListError.value = message
+                            else getServerPlaceListByOffsetError.value = message
+                        }
                 }
             }
         }

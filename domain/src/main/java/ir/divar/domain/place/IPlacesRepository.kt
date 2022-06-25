@@ -7,7 +7,10 @@ import ir.divar.domain.remote.BaseResult
 
 interface IPlacesRepository {
 
-    suspend fun getPlacesFromServer(placePosition: PlacePosition): BaseResult<Pair<PlaceSummaryResponse, List<Place>?>, String>
+    suspend fun getPlacesFromServer(
+        placePosition: PlacePosition,
+        offset: Int
+    ): BaseResult<Pair<PlaceSummaryResponse, List<Place>?>, String>
 
     suspend fun getPlaceListFromLocal(): List<Place>?
     suspend fun insertPlaceList(placeList: List<Place>): Unit?

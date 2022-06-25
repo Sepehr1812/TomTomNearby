@@ -19,7 +19,7 @@ object PlaceRemoteMapper {
 
     fun mapSummaryToDomain(placeSummaryRemoteModel: PlaceSummaryRemoteModel) =
         placeSummaryRemoteModel.run {
-            PlaceSummaryResponse(offset, totalResults)
+            PlaceSummaryResponse(numResults, offset, totalResults)
         }
 
     private fun convertCategoryListToString(categories: List<String>): String {
