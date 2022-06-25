@@ -28,7 +28,7 @@ class PlaceAdapter(
             tvPlaceCategory.text = place.categories
             tvPlaceLocalityDistance.text = root.context.getString(
                 R.string.locality_distance_placeholder,
-                place.location.locality,
+                place.address.region,
                 place.distance
             )
 

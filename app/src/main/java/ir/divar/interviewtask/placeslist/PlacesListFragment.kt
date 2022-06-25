@@ -33,6 +33,7 @@ import ir.divar.domain.place.model.Place
 import ir.divar.interviewtask.R
 import ir.divar.interviewtask.databinding.FragmentPlacesListBinding
 import ir.divar.interviewtask.util.Constants
+import ir.divar.interviewtask.util.Constants.PAGE_OFFSET_SIZE
 import ir.divar.interviewtask.util.DialogHelper
 import ir.divar.interviewtask.util.UserLocationSharedPreferences
 
@@ -56,8 +57,11 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
     private lateinit var placeAdapter: PlaceAdapter
     private val placeList = mutableListOf<Place>()
 
-    // the next page link we use for implement pagination for places list
-    private var nextLink: String? = null
+    // the next page offset we use for implement pagination for places list for server
+    private var nextRemoteOffset: Int? = null
+
+    // the next page offset we use for implement pagination for places list for database
+    private var nextLocalOffset: Int? = null
 
     private var currentLocation: LatLng? = null
     private lateinit var locationRequest: LocationRequest
@@ -67,8 +71,8 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             currentLocation = locationResult.lastLocation.run { LatLng(latitude, longitude) }
 
             if (isNetworkConnected()) checkIfApiCallIsRequired()
-            // obtain data from local Db when there is no Internet connection
-            else placesListViewModel.getLocalPlaceList()
+            // obtain data from local Db when there is no Internet connection and place list is empty
+            else if (placeList.isEmpty()) placesListViewModel.getLocalPlaceList()
         }
     }
 
@@ -139,9 +143,14 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
                     super.onScrolled(recyclerView, dx, dy)
                     if (!canScrollVertically(1 /* scroll down */))
                     // request for the next page of places if available
-                        nextLink?.also {
+                        nextRemoteOffset?.also {
                             binding.pbLoadMore.visibility = View.VISIBLE
-                            placesListViewModel.getServerPlaceListByLink(it)
+                            currentLocation?.let { latLng ->
+                                placesListViewModel.getServerPlaceList(latLng, it)
+                            }
+                        } ?: nextLocalOffset?.also {
+                            binding.pbLoadMore.visibility = View.VISIBLE
+                            placesListViewModel.getLocalPlaceList(it)
                         }
                 }
             })
@@ -156,6 +165,9 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placeList.addAll(it)
             placeAdapter.notifyDataSetChanged()
 
+            // set local offset if there are more than 10 places in database and we need pagination
+            if (it.size == PAGE_OFFSET_SIZE) nextLocalOffset = PAGE_OFFSET_SIZE
+
             displayNoPlacesTextView()
         }
 
@@ -166,6 +178,26 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placeAdapter.notifyDataSetChanged()
 
             displayNoPlacesTextView()
+        }
+
+        placesListViewModel.getLocalPlaceListByOffsetResponse.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                val oldSize = placeList.size
+                placeList.addAll(it)
+                placeAdapter.notifyItemRangeInserted(oldSize, placeList.size)
+            }
+
+            // set local offset if there are more places in database and we need pagination
+            // set `null` if we are sure there is no more places (places size is less than 10)
+            nextLocalOffset = if (it.size == PAGE_OFFSET_SIZE) placeList.size else null
+
+            binding.pbLoadMore.visibility = View.GONE
+        }
+
+        placesListViewModel.getLocalPlaceListByOffsetError.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), R.string.no_data, Toast.LENGTH_SHORT).show()
+
+            binding.pbLoadMore.visibility = View.GONE
         }
 
         placesListViewModel.getServerPlaceListResponse.observe(viewLifecycleOwner) {
@@ -184,11 +216,11 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placesListViewModel.getLocalPlaceList()
         }
 
-        placesListViewModel.getServerPlaceListNextUrlResponse.observe(viewLifecycleOwner) {
-            nextLink = it
+        placesListViewModel.getServerPlaceListNextOffsetResponse.observe(viewLifecycleOwner) {
+            nextRemoteOffset = it
         }
 
-        placesListViewModel.getServerPlaceListByLinkResponse.observe(viewLifecycleOwner) {
+        placesListViewModel.getServerPlaceListByOffsetResponse.observe(viewLifecycleOwner) {
             val oldSize = placeList.size
             placeList.addAll(it)
             placeAdapter.notifyItemRangeInserted(oldSize, placeList.size)
@@ -198,7 +230,7 @@ class PlacesListFragment : Fragment(), PlaceAdapter.OnItemClickListener {
             placesListViewModel.insertPlaceList(it)
         }
 
-        placesListViewModel.getServerPlaceListByLinkError.observe(viewLifecycleOwner) {
+        placesListViewModel.getServerPlaceListByOffsetError.observe(viewLifecycleOwner) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             binding.pbLoadMore.visibility = View.GONE
         }

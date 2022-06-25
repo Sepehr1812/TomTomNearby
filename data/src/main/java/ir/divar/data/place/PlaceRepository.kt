@@ -4,7 +4,7 @@ import ir.divar.data.place.local.PlaceLocalRepository
 import ir.divar.data.place.remote.PlaceRemoteRepository
 import ir.divar.domain.place.IPlacesRepository
 import ir.divar.domain.place.model.Place
-import ir.divar.domain.place.model.PlaceGeocode
+import ir.divar.domain.place.model.PlacePosition
 import javax.inject.Inject
 
 class PlaceRepository @Inject constructor(
@@ -12,14 +12,11 @@ class PlaceRepository @Inject constructor(
     private val placeLocalRepository: PlaceLocalRepository
 ) : IPlacesRepository {
 
-    override suspend fun getPlacesFromServer(placeGeocode: PlaceGeocode) =
-        placeRemoteRepository.getPlaces(placeGeocode)
+    override suspend fun getPlacesFromServer(placePosition: PlacePosition, offset: Int) =
+        placeRemoteRepository.getPlaces(placePosition, offset)
 
-    override suspend fun getPlacesByLinkFromServer(url: String) =
-        placeRemoteRepository.getPlacesByLink(url)
-
-    override suspend fun getPlaceListFromLocal() =
-        placeLocalRepository.getPlaceListFromLocal()
+    override suspend fun getPlaceListFromLocal(offset: Int) =
+        placeLocalRepository.getPlaceListFromLocal(offset)
 
     override suspend fun insertPlaceList(placeList: List<Place>) =
         placeLocalRepository.insertPlaceList(placeList)

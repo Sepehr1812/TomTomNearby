@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MiniFourSquare</string>
+    <string name="app_name">MiniTomTom</string>
     <string name="nearby_places">Nearby Places</string>
     <string name="no_places">There is no place nearby.</string>
     <string name="back_button_desc">Back</string>

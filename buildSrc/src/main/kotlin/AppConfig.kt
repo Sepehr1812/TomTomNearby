@@ -1,7 +1,7 @@
 object AppConfig {
 
     const val compileSdk = 32
-    const val applicationId = "ir.divar.interviewtask"
+    const val applicationId = "ir.sotoon.interviewtask"
     const val minSdk = 26
     const val targetSdk = 32
     const val versionCode = 1

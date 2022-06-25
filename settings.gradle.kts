@@ -15,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "DivarInterviewTask"
+rootProject.name = "SotoonInterviewTask"
 include(":app", ":data", ":domain")

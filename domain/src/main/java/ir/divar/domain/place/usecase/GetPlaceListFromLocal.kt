@@ -9,8 +9,8 @@ class GetPlaceListFromLocal @Inject constructor(
     private val iPlacesRepository: IPlacesRepository
 ) : GeneralUsecase<GetPlaceListFromLocal.RequestValues, List<Place>>() {
 
-    class RequestValues : RequestValue
+    data class RequestValues(val offset: Int) : RequestValue
 
     override suspend fun executeUseCase(requestValues: RequestValues) =
-        iPlacesRepository.getPlaceListFromLocal()
+        iPlacesRepository.getPlaceListFromLocal(requestValues.offset)
 }

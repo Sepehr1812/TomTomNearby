@@ -10,6 +10,6 @@ data class Place(
     val name: String,
     val categories: String,
     val distance: Int,
-    val geocode: PlaceGeocode,
-    val location: PlaceLocation
+    val geocode: PlacePosition,
+    val address: PlaceAddress
 ) : Parcelable

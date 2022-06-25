@@ -1,18 +1,36 @@
 package ir.divar.data.place.remote.model
 
 import ir.divar.domain.place.model.Place
-import ir.divar.domain.place.model.PlaceCategory
+import ir.divar.domain.place.model.PlaceSummaryResponse
+import kotlin.math.roundToInt
 
 object PlaceRemoteMapper {
 
     fun mapToDomain(placeRemoteModel: PlaceRemoteModel) = placeRemoteModel.run {
-        Place(id, name, convertCategoryListToString(categories), distance, geocodes.main, location)
+        Place(
+            id,
+            placeInfo.name,
+            convertCategoryListToString(placeInfo.categories),
+            distance.roundToInt(),
+            position,
+            address
+        )
     }
 
-    private fun convertCategoryListToString(categories: List<PlaceCategory>): String {
+    fun mapSummaryToDomain(placeSummaryRemoteModel: PlaceSummaryRemoteModel) =
+        placeSummaryRemoteModel.run {
+            PlaceSummaryResponse(numResults, offset, totalResults)
+        }
+
+    private fun convertCategoryListToString(categories: List<String>): String {
         var result = ""
         categories.forEach {
-            result = result.plus(it.name).plus(", ")
+            result =
+                result.plus(
+                    // capitalize each word
+                    it.trim().split(" ")
+                        .joinToString(" ") { s -> s.replaceFirstChar(Char::titlecase) })
+                    .plus(", ")
         }
 
         return result.removeSuffix(", ")

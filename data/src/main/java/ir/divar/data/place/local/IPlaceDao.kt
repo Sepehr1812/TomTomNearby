@@ -11,8 +11,8 @@ import ir.divar.data.place.local.model.PlaceEntity
 @Dao
 interface IPlaceDao : GeneralDao {
 
-    @Query("SELECT * FROM Places")
-    suspend fun getPlaceListFromLocal(): List<PlaceEntity>
+    @Query("SELECT * FROM Places LIMIT 10 OFFSET :offset")
+    suspend fun getPlaceListFromLocal(offset: Int): List<PlaceEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlaceList(placeList: List<PlaceEntity>)

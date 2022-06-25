@@ -5,7 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import ir.divar.domain.place.IPlacesRepository
-import ir.divar.domain.place.usecase.*
+import ir.divar.domain.place.usecase.ClearPlaceList
+import ir.divar.domain.place.usecase.GetPlaceListFromLocal
+import ir.divar.domain.place.usecase.GetPlaceListFromServer
+import ir.divar.domain.place.usecase.InsertPlaceList
 
 
 @Module
@@ -15,10 +18,6 @@ object UsecaseModule {
     @Provides
     fun provideGetPlaceListFromServer(iPlacesRepository: IPlacesRepository) =
         GetPlaceListFromServer(iPlacesRepository)
-
-    @Provides
-    fun provideGetPlaceListByLinkFromServer(iPlacesRepository: IPlacesRepository) =
-        GetPlaceListByLinkFromServer(iPlacesRepository)
 
     @Provides
     fun provideGetPlaceListFromLocal(iPlacesRepository: IPlacesRepository) =

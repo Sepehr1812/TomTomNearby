@@ -1,6 +1,8 @@
-# DivarInterviewTask
+# Sotoon Interview Task
 
-Divar Interview Task; find nearby places via FourSquare Places API.
+Sotoon Interview Task; find nearby places via TomTom Places API.
+
+[API doxumentation link](https://developer.tomtom.com/search-api/documentation/search-service/nearby-search)
 
 ## Getting started
 
