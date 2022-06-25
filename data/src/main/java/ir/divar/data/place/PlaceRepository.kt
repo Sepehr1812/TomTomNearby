@@ -15,8 +15,8 @@ class PlaceRepository @Inject constructor(
     override suspend fun getPlacesFromServer(placePosition: PlacePosition, offset: Int) =
         placeRemoteRepository.getPlaces(placePosition, offset)
 
-    override suspend fun getPlaceListFromLocal() =
-        placeLocalRepository.getPlaceListFromLocal()
+    override suspend fun getPlaceListFromLocal(offset: Int) =
+        placeLocalRepository.getPlaceListFromLocal(offset)
 
     override suspend fun insertPlaceList(placeList: List<Place>) =
         placeLocalRepository.insertPlaceList(placeList)

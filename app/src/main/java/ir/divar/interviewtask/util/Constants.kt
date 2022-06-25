@@ -6,6 +6,7 @@ object Constants {
     const val BASE_URL = "https://api.tomtom.com/"
 
     const val PROBLEM_OCCURRED_ERROR_MESSAGE = "A Problem Occurred in Server Response"
-    const val JOSEFIN_SANS_REGULAR_FONT = "font/josefin_sans_regular.ttf"
     const val PACKAGE = "package"
+
+    const val PAGE_OFFSET_SIZE = 10
 }

@@ -12,7 +12,7 @@ interface IPlacesRepository {
         offset: Int
     ): BaseResult<Pair<PlaceSummaryResponse, List<Place>?>, String>
 
-    suspend fun getPlaceListFromLocal(): List<Place>?
+    suspend fun getPlaceListFromLocal(offset: Int): List<Place>?
     suspend fun insertPlaceList(placeList: List<Place>): Unit?
     suspend fun clearPlaceList(): Unit?
 }

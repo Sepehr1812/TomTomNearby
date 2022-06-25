@@ -11,8 +11,8 @@ class PlaceLocalRepository @Inject constructor(
     private val iPlaceDao: IPlaceDao
 ) {
 
-    suspend fun getPlaceListFromLocal() = iPlaceDao.executeQuery({
-        getPlaceListFromLocal().map { PlaceLocalMapper.mapToDomain(it) }
+    suspend fun getPlaceListFromLocal(offset: Int) = iPlaceDao.executeQuery({
+        getPlaceListFromLocal(offset).map { PlaceLocalMapper.mapToDomain(it) }
     }, onError = { Log.e(Constants.PLACE_TAG, "error getting places") })
 
     suspend fun insertPlaceList(placeList: List<Place>) = iPlaceDao.executeQuery({

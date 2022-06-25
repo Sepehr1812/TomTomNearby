@@ -28,6 +28,9 @@ class PlacesListViewModel @Inject constructor(
     val getLocalPlaceListResponse = SingleLiveEvent<List<Place>>()
     val getLocalPlaceListError = SingleLiveEvent<Unit>()
 
+    val getLocalPlaceListByOffsetResponse = SingleLiveEvent<List<Place>>()
+    val getLocalPlaceListByOffsetError = SingleLiveEvent<Unit>()
+
     val getServerPlaceListNextOffsetResponse = SingleLiveEvent<Int?>()
 
     val getServerPlaceListResponse = SingleLiveEvent<List<Place>>()
@@ -47,11 +50,17 @@ class PlacesListViewModel @Inject constructor(
         e.printStackTrace()
     }
 
-    fun getLocalPlaceList() {
+    fun getLocalPlaceList(offset: Int = 0) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            getPlaceListFromLocal.executeUseCase(GetPlaceListFromLocal.RequestValues())?.also {
-                getLocalPlaceListResponse.value = it
-            } ?: apply { getLocalPlaceListError.value = Unit }
+            getPlaceListFromLocal.executeUseCase(GetPlaceListFromLocal.RequestValues(offset))
+                ?.also {
+                    if (offset == 0)
+                        getLocalPlaceListResponse.value = it
+                    else getLocalPlaceListByOffsetResponse.value = it
+                } ?: apply {
+                if (offset == 0) getLocalPlaceListError.value = Unit
+                else getLocalPlaceListByOffsetError.value = Unit
+            }
         }
     }
 
