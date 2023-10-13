@@ -1,5 +1,5 @@
 # TomTom Nearby
-A simple Android app that obtains nearby places data from TomTom public Nearby Search API and displays them to the user.
+A simple Android app that obtains nearby places data from TomTom public Nearby Search API and displays them to the user. For a similar app with FourSquare Place Search API, see my [FourSquareNearby](https://github.com/Sepehr1812/FourSquareNearby) repository.
 
 ## Features
 * **Nearby Places**: The user can see a list of places within a radius of 5 km of the current location.
@@ -23,4 +23,4 @@ In this project, I benefited from several Android concepts and libraries, includ
 - Pagination
 - Kotlin DSL
 
-Also, I implemented this project with MVVM architecture utilizing clean architecture principles. The project is modulized based on the different layers of the app in three modules of data, domain, and app.
+Also, I implemented this project with MVVM architecture utilizing clean architecture principles. The project is modulized based on the different layers of the app in three modules: data, domain, and app.
